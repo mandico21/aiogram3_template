@@ -1,0 +1,39 @@
+version: 1
+disable_existing_loggers: False
+
+formatters:
+  console:
+    (): 'colorlog.ColoredFormatter'
+    format: '%(cyan)s%(asctime)s %(blue)s| %(log_color)s%(levelname)s %(blue)s | %(purple)s%(filename)s:%(lineno)d %(blue)s| %(message)s'
+    datefmt: '%Y-%m-%d %H:%M:%S'
+
+  default:
+    format: '%(asctime)s | %(levelname)s | %(filename)s:%(lineno)d | %(message)s'
+    datefmt: '%Y-%m-%d %H:%M:%S'
+
+handlers:
+  console:
+    class : logging.StreamHandler
+    formatter: console
+
+  file:
+    class : logging.handlers.RotatingFileHandler
+    formatter: default
+    filename: logs/file/all.log
+    maxBytes: 52_428_800
+    backupCount: 3
+
+  users:
+    class: logging.handlers.RotatingFileHandler
+    formatter: default
+    filename: logs/file/users.log
+    maxBytes: 52_428_800
+    backupCount: 1
+
+loggers:
+  root:
+    level: INFO
+    handlers: [console, file]
+
+  users:
+    handlers: [console, users]
