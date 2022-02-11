@@ -19,15 +19,15 @@ services:
       - tg_bot
 
   influxdb:
-    image: influxdb:1.8-alpine
+    image: influxdb:2.1-alpine
     container_name: "test-stats-influxdb"
     restart: always
     volumes:
       - "../influxdb:/var/lib/influxdb"
+    ports:
+      - "8086:8086"
     env_file:
-      - '.env'
-    networks:
-      - tg_bot
+      - .env
 
 networks:
   tg_bot:

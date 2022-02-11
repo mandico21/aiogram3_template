@@ -6,7 +6,7 @@ from aiogram import BaseMiddleware
 from aiogram.dispatcher.event.bases import UNHANDLED
 from aiogram.types import TelegramObject, Message, CallbackQuery
 
-from bot.analytics import RawUpdatePre
+from tgbot.misc.analics import RawUpdatePre
 
 
 class LogUpdatesMiddleware(BaseMiddleware):
