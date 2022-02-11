@@ -1,9 +1,11 @@
 import logging
+from queue import Queue
 
 from aiogram import Bot, Dispatcher
 from aiogram.dispatcher.fsm.storage.memory import MemoryStorage
 
 from tgbot.config import Config, load_config
+from tgbot.misc.analics import InfluxAnalyticsClient
 from tgbot.misc.bot_commands import set_commands
 from tgbot.routes import register_all_routes
 
@@ -17,6 +19,16 @@ async def on_startup():
     storage = MemoryStorage()
     dp = Dispatcher(storage=storage)
 
+    objects_queue = Queue()
+
+    influx = InfluxAnalyticsClient(
+        url=config.influxdb.host, token=config.influxdb.token, org=config.influxdb.org, objects_queue=objects_queue
+    )
+    if not influx.healthcheck():
+        raise ChildProcessError
+
+    influx.start()
+
     register_all_routes(dp, config)
     await set_commands(bot, config)
     try:
@@ -25,4 +37,5 @@ async def on_startup():
         await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
     finally:
         await storage.close()
+        influx.stopflag.set()
         await bot.session.close()

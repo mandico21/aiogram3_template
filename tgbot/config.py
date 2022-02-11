@@ -24,10 +24,18 @@ class Miscellaneous:
 
 
 @dataclass
+class InfluxDB:
+    host: str
+    org: str
+    token: str
+
+
+@dataclass
 class Config:
     tg_bot: TgBot
     db: DbConfig
     misc: Miscellaneous
+    influxdb: InfluxDB
 
 
 def load_config(path: str = None):
@@ -46,5 +54,10 @@ def load_config(path: str = None):
             user=env.str('DB_USER'),
             database=env.str('DB_NAME')
         ),
-        misc=Miscellaneous()
+        misc=Miscellaneous(),
+        influxdb=InfluxDB(
+            host=env.str("INFLUXDB_HOST"),
+            org=env.str("INFLUXDB_ORG"),
+            token=env.str("INFLUXDB_TOKEN"),
+        )
     )
