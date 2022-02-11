@@ -5,7 +5,7 @@ from aiogram import Bot, Dispatcher
 from aiogram.dispatcher.fsm.storage.memory import MemoryStorage
 
 from tgbot.config import Config, load_config
-from tgbot.misc.analics import InfluxAnalyticsClient
+from tgbot.misc.analytics import InfluxAnalyticsClient
 from tgbot.misc.bot_commands import set_commands
 from tgbot.routes import register_all_routes
 
@@ -20,7 +20,9 @@ async def on_startup():
     dp = Dispatcher(storage=storage)
 
     objects_queue = Queue()
-
+    print(config.influxdb.host)
+    print(config.influxdb.token)
+    print(config.influxdb.org)
     influx = InfluxAnalyticsClient(
         url=config.influxdb.host, token=config.influxdb.token, org=config.influxdb.org, objects_queue=objects_queue
     )

@@ -24,6 +24,8 @@ services:
     restart: always
     volumes:
       - "../influxdb:/var/lib/influxdb"
+    ports:
+      - "8086:8086"
     env_file:
       - .env
     networks:

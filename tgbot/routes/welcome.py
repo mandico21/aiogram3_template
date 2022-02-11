@@ -4,7 +4,7 @@ from aiogram import Router
 from aiogram.dispatcher.filters.command import CommandStart
 from aiogram.types import Message
 
-from tgbot.misc.analics import NamedEventPre
+from tgbot.misc.analytics import NamedEventPre
 
 welcome_router = Router()
 
