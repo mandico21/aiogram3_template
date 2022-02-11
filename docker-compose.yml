@@ -20,14 +20,14 @@ services:
 
   influxdb:
     image: influxdb:2.1-alpine
-    container_name: "test-stats-influxdb"
+    container_name: "stats-influxdb"
     restart: always
     volumes:
       - "../influxdb:/var/lib/influxdb"
-    ports:
-      - "8086:8086"
     env_file:
       - .env
+    networks:
+      - tg_bot
 
 networks:
   tg_bot:

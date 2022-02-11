@@ -16,5 +16,6 @@ async def on_start_command(msg: Message, objects_queue: Queue) -> None:
 
 
 @welcome_router.message(commands='help')
-async def on_help_command(msg: Message) -> None:
+async def on_help_command(msg: Message, objects_queue: Queue) -> None:
     await msg.answer("Помощь")
+    objects_queue.put(NamedEventPre(event="Команда /help"))
