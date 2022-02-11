@@ -34,7 +34,7 @@ async def on_startup():
     try:
         logger.info('Starting bot')
         await bot.get_updates(offset=-1)
-        await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
+        await dp.start_polling(bot, objects_queue=objects_queue, allowed_updates=dp.resolve_used_update_types())
     finally:
         await storage.close()
         influx.stopflag.set()
