@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+    bot:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        stop_signal: SIGINT
+        restart: "always"
+        env_file:
+            - .env
+        depends_on:
+            - grafana
+            - influxdb
+
+    influxdb:
+        image: influxdb:2.1-alpine
+        restart: "always"
+        volumes:
+            - "/path/to/your/influxdb_data:/var/lib/influxdb2"
+        ports:
+            - "8086:8086"
+        env_file:
+            - .env
