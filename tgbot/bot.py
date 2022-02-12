@@ -20,9 +20,7 @@ async def on_startup():
     dp = Dispatcher(storage=storage)
 
     objects_queue = Queue()
-    print(config.influxdb.host)
-    print(config.influxdb.token)
-    print(config.influxdb.org)
+
     influx = InfluxAnalyticsClient(
         url=config.influxdb.host, token=config.influxdb.token, org=config.influxdb.org, objects_queue=objects_queue
     )
