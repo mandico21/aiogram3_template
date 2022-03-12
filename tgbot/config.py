@@ -11,6 +11,11 @@ class TgBot:
 
 
 @dataclass
+class Redis:
+    host: str
+
+
+@dataclass
 class Miscellaneous:
     other_params: str = None
 
@@ -18,6 +23,7 @@ class Miscellaneous:
 @dataclass
 class Config:
     tg_bot: TgBot
+    redis: Redis
     misc: Miscellaneous
 
 
@@ -30,6 +36,9 @@ def load_config(path: str = None):
             token=env.str("BOT_TOKEN"),
             admin_ids=list(map(int, env.list("ADMINS"))),
             use_redis=env.bool("USE_REDIS"),
+        ),
+        redis=Redis(
+            host=env.str("REDIS_HOST")
         ),
         misc=Miscellaneous()
     )

@@ -2,6 +2,7 @@ import logging
 
 from aiogram import Bot, Dispatcher
 from aiogram.dispatcher.fsm.storage.memory import MemoryStorage
+from aiogram.dispatcher.fsm.storage.redis import RedisStorage
 
 from tgbot.config import Config, load_config
 from tgbot.misc.bot_commands import set_commands
@@ -14,7 +15,7 @@ async def main():
     config: Config = load_config('.env')
     bot = Bot(token=config.tg_bot.token, parse_mode='HTML')
 
-    storage = MemoryStorage()
+    storage = RedisStorage.from_url(f"redis://{config.redis.host}") if config.tg_bot.use_redis else MemoryStorage()
     dp = Dispatcher(storage=storage)
 
     register_all_routes(dp, config)
