@@ -10,7 +10,7 @@ from tgbot.routes import register_all_routes
 logger = logging.getLogger(__name__)
 
 
-async def on_startup():
+async def main():
     config: Config = load_config('.env')
     bot = Bot(token=config.tg_bot.token, parse_mode='HTML')
 
