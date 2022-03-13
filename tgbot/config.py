@@ -16,6 +16,15 @@ class Redis:
 
 
 @dataclass
+class DB:
+    host: str
+    port: int
+    name: str
+    user: str
+    password: str
+
+
+@dataclass
 class Miscellaneous:
     other_params: str = None
 
@@ -24,6 +33,7 @@ class Miscellaneous:
 class Config:
     tg_bot: TgBot
     redis: Redis
+    db: DB
     misc: Miscellaneous
 
 
@@ -39,6 +49,13 @@ def load_config(path: str = None):
         ),
         redis=Redis(
             host=env.str("REDIS_HOST")
+        ),
+        db=DB(
+            host=env.str('POSTGRES_HOST'),
+            password=env.str('POSTGRES_PASSWORD'),
+            user=env.str('POSTGRES_USER'),
+            name=env.str('POSTGRES_DB'),
+            port=env.str('POSTGRES_PORT'),
         ),
         misc=Miscellaneous()
     )

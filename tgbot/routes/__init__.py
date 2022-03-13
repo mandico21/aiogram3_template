@@ -14,6 +14,7 @@ def register_all_routes(dp: Dispatcher, config: Config) -> None:
 
     master_router.include_router(welcome_router)
     master_router.include_router(admin_router)
+
     # Administrator routers
     admin = config.tg_bot.admin_ids
     admin_check_router.message.filter(F.from_user.id.in_(admin))
